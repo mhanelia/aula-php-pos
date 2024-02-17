@@ -18,7 +18,7 @@
 						</div>
                         <div class="control-group">
                             <div class="controls">
-                                <input name="image" type="file">
+                                <input name="image" type="file" accept="image/png, image/jpeg">
                             </div>
                         </div>
                         <br />
