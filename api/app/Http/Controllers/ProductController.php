@@ -44,14 +44,12 @@ class ProductController extends Controller
      */
     public function save(Request $request): RedirectResponse
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'name' => 'required|min:1|max:255',
-            'description' => 'required',
+            'description' => 'sometimes',
         ]);
 
-        if(!$validator->fails()){
-            $this->productService->create($request->all());
-        }
+        $this->productService->create($request->all());
 
         return redirect()->route('product.index');
     }
@@ -64,15 +62,14 @@ class ProductController extends Controller
     {
         $product = $this->productService->find($id);
         $categories = $this->categoryService->findAll();
-        $selected_cat = [];
         $selected = [];
         $images = $product->images;
 
         if (!empty($product->categories)) {
             foreach ($product->categories as $category) {
-                $selected_cat[] = $category->pivot->category_id;
+                $selected[] = $category->pivot->category_id;
             }
-            return view('product.edit', compact('product', 'categories', 'selected_cat', 'images', 'selected'));
+            return view('product.edit', compact('product', 'categories', 'selected', 'images'));
         }
 
         return redirect()->route('product.index');
@@ -85,6 +82,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
+        $request->validate([
+            'name' => 'required|min:1|max:255',
+            'description' => 'sometimes',
+        ]);
         $this->productService->update($id, $request->all());
 
         return redirect()->route('product.index');
@@ -113,6 +114,6 @@ class ProductController extends Controller
 
         $categories = $this->categoryService->findAll();
 
-        return view('product.index', compact('products', 'categories', 'selected_cat', 'search'));
+        return view('product.index', compact('products', 'categories', 'search'));
     }
 }
