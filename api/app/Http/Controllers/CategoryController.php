@@ -6,6 +6,7 @@ use App\Services\CategoryService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class CategoryController extends Controller
 {

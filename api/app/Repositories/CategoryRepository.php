@@ -53,5 +53,10 @@ class CategoryRepository
         return $this->categoryModel::where('active', 1)->where('name', 'like', '%' . $all['name'] . '%')->get();
     }
 
+    public function findAll()
+    {
+        return $this->categoryModel::where('active', 1)->get();
+    }
+
 
 }

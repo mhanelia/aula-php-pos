@@ -68,4 +68,9 @@ class CategoryService
     {
         return $this->categoryRepository->search($all);
     }
+
+    public function findAll()
+    {
+        return $this->categoryRepository->findAll();
+    }
 }

@@ -1,4 +1,5 @@
-<?php
+<        return Product::create($all);
+?php
 
 namespace App\Http\Controllers;
 
