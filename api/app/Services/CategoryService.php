@@ -7,11 +7,11 @@ use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-
+use App\Enums\ImagePath;
 class CategoryService
 {
 
-    const IMAGE_PATH = 'images/category';
+
 
     public function __construct(
         protected CategoryRepository $categoryRepository
@@ -30,7 +30,7 @@ class CategoryService
     public function create(array $data): ?Model
     {
         $image = Arr::get($data, 'image');
-        $fileName = FileService::move($image, self::IMAGE_PATH);
+        $fileName = FileService::move($image, ImagePath::CATEGORY->value);
         return $this->categoryRepository->create([
             'name' => Arr::get($data, 'name'),
             'image' => $fileName
@@ -56,8 +56,8 @@ class CategoryService
 
         if (!empty($data['image'])) {
             $deletedImage = Arr::get($data, 'deleted_image');
-            FileService::delete($deletedImage, self::IMAGE_PATH);
-            $fileName = FileService::move($data['image'], self::IMAGE_PATH);
+            FileService::delete($deletedImage, ImagePath::CATEGORY->value);
+            $fileName = FileService::move($data['image'], ImagePath::CATEGORY->value);
             $name['image'] = $fileName;
         }
 
